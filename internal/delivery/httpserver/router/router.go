@@ -1,8 +1,8 @@
 package router
 
 import (
+	"github.com/j3yzz/quickbite/internal/delivery/httpserver/handler"
 	"github.com/labstack/echo/v4"
-	"net/http"
 )
 
 type Router struct {
@@ -18,9 +18,5 @@ func (r *Router) Provide() {
 
 	v1Router := apiRouter.Group("/v1")
 
-	v1Router.GET("/health-check", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{
-			"msg": "Hello",
-		})
-	})
+	handler.Health{}.Register(v1Router)
 }
