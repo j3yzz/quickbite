@@ -14,7 +14,11 @@ func New(webserver *echo.Echo) *Router {
 }
 
 func (r *Router) Provide() {
-	r.webServer.GET("/health-check", func(c echo.Context) error {
+	apiRouter := r.webServer.Group("/api")
+
+	v1Router := apiRouter.Group("/v1")
+
+	v1Router.GET("/health-check", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, map[string]string{
 			"msg": "Hello",
 		})
